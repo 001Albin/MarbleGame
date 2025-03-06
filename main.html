@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Squid Game - Marble Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen text-white font-sans relative bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/1080');">
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-transparent to-green-400/20 pointer-events-none -z-10"></div>
+  
+  <header class="fixed top-0 left-0 right-0 py-4 px-6 flex justify-between items-center z-10 bg-gray-900/90 border-b-2 border-red-600">
+    <div class="text-white">
+      <span id="playerNameDisplay" class="font-bold">Player Name</span> - <span id="playerNumber" class="text-red-500">000</span>
+      - Status: <span id="playerStatus" class="text-green-500">Alive</span>
+    </div>
+    <div class="text-white">
+      Time Left: <span id="timer" class="font-mono text-red-500 shadow-red-500/70 shadow-sm">3:00</span>
+    </div>
+    <div>
+      <button id="rulesButton" class="px-4 py-2 rounded text-white uppercase tracking-wider bg-red-600 hover:bg-red-800 transform hover:scale-105 transition-all duration-300">Rules</button>
+    </div>
+  </header>
+
+  <main class="container mx-auto flex items-center justify-center min-h-screen">
+    <div class="p-8 rounded-lg max-w-2xl w-full relative bg-gray-900/90 border-4 border-red-600 shadow-xl shadow-red-500/50 overflow-hidden">
+      <!-- Background pattern -->
+      <div class="absolute inset-0 bg-cover bg-repeat bg-center opacity-3 pointer-events-none -z-10" style="background-image: url('/api/placeholder/400/300');"></div>
+      
+      <h2 class="text-3xl font-bold mb-6 text-center text-red-600 shadow-red-600/70 shadow-sm">Marble Game Rules</h2>
+      <div class="space-y-4">
+        <ol class="space-y-3">
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>You have <span class="text-red-500">3 minutes</span> to complete the game.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>Both players start with <span class="text-yellow-500">10 marbles</span>.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>One player hides a number of marbles, the other guesses if the total is even or odd.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>Correct guess: You win the hidden marbles. Wrong guess: You lose those marbles.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>Players take turns hiding and guessing.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>Collect <span class="text-green-500">20 marbles</span> to win.</li>
+          <li class="relative pl-5 mb-2 text-gray-100"><span class="absolute left-0 top-1.5 w-2 h-2 bg-red-600 rounded-full"></span>If time runs out before anyone wins, both players are <span class="text-red-500">eliminated</span>.</li>
+        </ol>
+      </div>
+      <div class="text-center mt-8">
+        <button id="startGameButton" class="px-6 py-3 rounded uppercase tracking-wider font-bold bg-red-600 hover:bg-red-800 transform hover:scale-105 transition-all duration-300">
+          Begin the Game
+        </button>
+      </div>
+      
+      <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-5">
+        <div class="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

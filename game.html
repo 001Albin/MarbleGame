@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squid Game - Marble Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-pink-900 text-white min-h-screen flex flex-col">
+    <!-- Header with Player Info and Timer -->
+    <header class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-95 backdrop-blur-sm z-10 flex justify-between items-center py-4 px-6 border-b border-pink-700">
+        <div class="flex items-center space-x-2">
+            <span id="playerNameDisplay" class="font-bold text-lg">Player Name</span>
+            <span class="text-gray-400">-</span>
+            <span id="playerNumber" class="text-green-500 font-mono">000</span>
+            <span class="text-gray-400">-</span>
+            <span class="text-sm">Status:</span>
+            <span id="playerStatus" class="text-green-500">Alive</span>
+        </div>
+        <div class="text-xl font-semibold">
+            Time Left: <span id="timer" class="text-pink-500 font-mono">3:00</span>
+        </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="container mx-auto mt-20 flex-grow flex flex-col items-center space-y-8">
+        <!-- Hide Box with 3D Flip Effect - Now hidden by default -->
+        <div id="hideBox" class="w-64 h-32 perspective-1000 invisible">
+            <div class="relative w-full h-full transition-transform duration-500 transform-style-preserve-3d">
+                <div class="absolute w-full h-full rounded-lg bg-gradient-to-r from-pink-500 to-red-500 flex items-center justify-center backface-hidden">
+                    <h2 class="text-xl font-bold">Hide Box</h2>
+                </div>
+                <div id="hideBoxBack" class="absolute w-full h-full rounded-lg bg-gray-800 transform rotate-y-180 flex items-center justify-center backface-hidden">
+                    <div id="hideBoxMarbles" class="flex space-x-2 opacity-0 transition-opacity duration-500 delay-3000"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game End Notification Card - Hidden by default -->
+        <div id="gameEndCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-2xl border-2 border-pink-600 z-50 w-80 hidden">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-3">Game Over</h3>
+                <div class="mb-4">
+                    <p>Player: <span id="endGamePlayerName" class="font-bold"></span></p>
+                    <p>Status: <span id="endGamePlayerStatus" class="font-bold"></span></p>
+                </div>
+                <button id="restartGameButton" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                    Play Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Player and CPU Game Sections -->
+        <div class="flex space-x-8 w-full max-w-4xl">
+            <!-- Player Section -->
+            <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-1/2 border-t-4 border-pink-500 transform hover:-translate-y-2 transition duration-300">
+                <h2 class="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-pink-500 to-red-500 bg-clip-text text-transparent">Player</h2>
+                <div id="userMarbles" class="flex flex-wrap space-x-2 justify-center mb-4"></div>
+                <div class="text-center mb-4">
+                    <p>Marbles Left: <span id="userMarbleCount" class="font-mono text-yellow-400">10</span></p>
+                </div>
+                <div id="userHideInput" class="text-center mb-4">
+                    <input type="number" id="userMarbleInput" min="1" max="10" class="border border-gray-600 rounded px-3 py-2 w-24 text-black text-center placeholder-gray-400" placeholder="1-10">
+                    <button id="userHideButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        Hide
+                    </button>
+                </div>
+                <div id="userGuessInput" class="text-center mb-4 hidden">
+                    <input type="text" id="userGuessDisplay" class="border border-gray-600 rounded px-3 py-2 w-24 text-black text-center" placeholder="Guess" readonly>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <button id="userEvenButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden">Even</button>
+                        <button id="userOddButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">Odd</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CPU Section -->
+            <div class="bg-gray-800 p-6 rounded-xl shadow-xl w-1/2 border-t-4 border-red-500 transform hover:-translate-y-2 transition duration-300">
+                <h2 class="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">CPU</h2>
+            </div>
+        </div>
+
+        <!-- Result Display -->
+        <div class="text-center">
+            <p id="resultText" class="text-lg font-medium"></p>
+        </div>
+        <!-- Game End Notification Card - Hidden by default -->
+<div id="gameEndCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-6 rounded-xl shadow-2xl border-2 border-pink-600 z-50 w-80 hidden">
+    <div class="text-center">
+        <h3 class="text-2xl font-bold mb-3">Game Over</h3>
+        <div class="mb-4">
+            <p>Player: <span id="endGamePlayerName" class="font-bold"></span></p>
+            <p>Status: <span id="endGamePlayerStatus" class="font-bold"></span></p>
+        </div>
+        <div class="flex justify-center space-x-4">
+            <button id="restartGameButton" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                Play Again
+            </button>
+            <button id="returnButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                Return
+            </button>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <style>
+        /* 3D box styling - needed for the 3D effect which is hard to fully replicate with just Tailwind classes */
+        #hideBox {
+            perspective: 1000px;
+        }
+        #hideBox > div {
+            transform-style: preserve-3d;
+            transition: transform 3s ease-in-out; /* Changed to 3s for slower transition and added ease-in-out for smoother effect */
+        }
+        #hideBox > div > div {
+            backface-visibility: hidden;
+        }
+        #hideBox.open > div {
+            transform: rotateY(180deg);
+        }
+        /* For showing marbles with delay */
+        #hideBox.open #hideBoxMarbles {
+            opacity: 1;
+            transition-delay: 3s; /* 3 second delay before showing marbles */
+        }
+        /* Make the hideBox visible only when needed */
+        #hideBox.active {
+            visibility: visible;
+        }
+        .marble {
+            width: 1.25rem;
+            height: 1.25rem;
+            background-image: linear-gradient(to bottom right, #fcd34d, #ca8a04);
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        /* Animation for game end notification */
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        #gameEndCard.show {
+            display: block;
+            animation: popIn 0.5s ease-out forwards;
+        }
+    </style>
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hideBox = document.getElementById('hideBox');
+        const hideBoxMarbles = document.getElementById('hideBoxMarbles');
+        const gameEndCard = document.getElementById('gameEndCard');
+        const endGamePlayerName = document.getElementById('endGamePlayerName');
+        const endGamePlayerStatus = document.getElementById('endGamePlayerStatus');
+        const restartGameButton = document.getElementById('restartGameButton');
+        const returnButton = document.getElementById('returnButton');
+        
+        // Existing hide box logic
+        if (document.getElementById('userHideButton')) {
+            document.getElementById('userHideButton').addEventListener('click', function() {
+                hideBox.classList.add('active');
+                setTimeout(() => {
+                    hideBox.classList.add('open');
+                }, 10);
+                setTimeout(() => {
+                    hideBox.classList.remove('active', 'open');
+                    hideBoxMarbles.style.opacity = "0";
+                }, 7000);
+            });
+        }
+
+        // Show game end notification
+        window.showGameEndNotification = function(playerName, status) {
+            endGamePlayerName.textContent = playerName;
+            endGamePlayerStatus.textContent = status;
+            
+            if (status.toLowerCase().includes('win')) {
+                endGamePlayerStatus.className = 'font-bold text-green-500';
+            } else if (status.toLowerCase().includes('lose') || status.toLowerCase().includes('eliminated')) {
+                endGamePlayerStatus.className = 'font-bold text-red-500';
+            } else {
+                endGamePlayerStatus.className = 'font-bold text-yellow-500';
+            }
+            
+            gameEndCard.classList.add('show');
+        }
+        
+        // Restart game button
+        if (restartGameButton) {
+            restartGameButton.addEventListener('click', function() {
+                gameEndCard.classList.remove('show');
+                if (window.restartGame && typeof window.restartGame === 'function') {
+                    window.restartGame();
+                } else {
+                    window.location.reload();
+                }
+            });
+        }
+
+        // Return button - redirect to index.html
+        if (returnButton) {
+            returnButton.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+        
+        // End game function
+        window.endGame = function(playerWon) {
+            window.stopTimer && window.stopTimer();
+            const playerName = document.getElementById('playerNameDisplay').textContent || 'Player';
+            let status;
+            if (playerWon === true) {
+                status = 'Winner';
+            } else if (playerWon === false) {
+                status = 'Eliminated';
+            } else {
+                status = 'Both Eliminated';
+            }
+            window.showGameEndNotification(playerName, status);
+        }
+    });
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
