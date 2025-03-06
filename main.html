@@ -4,10 +4,9 @@
   <title>Squid Game - Marble Game</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="min-h-screen text-white font-sans relative bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/1080');">
-  <!-- Gradient overlay -->
+<body class="min-h-screen text-white font-sans relative bg-black">
   <div class="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-transparent to-green-400/20 pointer-events-none -z-10"></div>
-  
+
   <header class="fixed top-0 left-0 right-0 py-4 px-6 flex justify-between items-center z-10 bg-gray-900/90 border-b-2 border-red-600">
     <div class="text-white">
       <span id="playerNameDisplay" class="font-bold">Player Name</span> - <span id="playerNumber" class="text-red-500">000</span>
@@ -23,9 +22,8 @@
 
   <main class="container mx-auto flex items-center justify-center min-h-screen">
     <div class="p-8 rounded-lg max-w-2xl w-full relative bg-gray-900/90 border-4 border-red-600 shadow-xl shadow-red-500/50 overflow-hidden">
-      <!-- Background pattern -->
       <div class="absolute inset-0 bg-cover bg-repeat bg-center opacity-3 pointer-events-none -z-10" style="background-image: url('/api/placeholder/400/300');"></div>
-      
+
       <h2 class="text-3xl font-bold mb-6 text-center text-red-600 shadow-red-600/70 shadow-sm">Marble Game Rules</h2>
       <div class="space-y-4">
         <ol class="space-y-3">
@@ -43,7 +41,7 @@
           Begin the Game
         </button>
       </div>
-      
+
       <div class="absolute bottom-5 left-0 right-0 flex justify-center gap-5">
         <div class="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
       </div>
